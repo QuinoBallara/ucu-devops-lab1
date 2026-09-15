@@ -7,8 +7,8 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'ENTORNO', choices: ['dev', 'qa',  'prod'], description: 'Ambiente de despliegue'),
-        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Versión de la aplicación'),
+        choice(name: 'ENTORNO', choices: ['dev', 'qa',  'prod'], description: 'Ambiente de despliegue')
+        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Versión de la aplicación')
         booleanParam(name: 'EJECUTAR_TESTS', defaultValue: true, description: 'Correr los test')
     }
  
