@@ -1,15 +1,14 @@
-// Starting point. Students grow this file module by module.
 pipeline {
     agent any
  
     options {
         timestamps()
     }
-
+ 
     parameters {
-        choice(name: 'ENTORNO', choices: ['dev', 'qa',  'prod'], description: 'Ambiente de despliegue')
-        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Versión de la aplicación')
-        booleanParam(name: 'EJECUTAR_TESTS', defaultValue: true, description: 'Correr los test')
+        choice(name: 'ENTORNO', choices: ['dev', 'qa', 'prod'], description: 'Ambiente destino')
+        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Version a desplegar')
+        booleanParam(name: 'EJECUTAR_TESTS', defaultValue: true, description: 'Correr los tests')
     }
  
     stages {
@@ -34,7 +33,7 @@ pipeline {
  
         stage('Test') {
             when {
-                expression { params.EJECUTAR_TESTS}
+                expression { params.EJECUTAR_TESTS }
             }
             steps {
                 sh '''
@@ -43,7 +42,7 @@ pipeline {
                 '''
             }
         }
-
+ 
         stage('Aprobacion') {
             when {
                 expression { params.ENTORNO == 'prod' }
@@ -60,11 +59,10 @@ pipeline {
             }
         }
     }
-    }
  
     post {
         always {
-            junit 'reports/junit.xml'
+            junit allowEmptyResults: true, testResults: 'reports/junit.xml'
         }
     }
 }
